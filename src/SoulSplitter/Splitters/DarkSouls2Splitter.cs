@@ -20,6 +20,7 @@ using System.Linq;
 using LiveSplit.Model;
 using SoulMemory;
 using SoulMemory.DarkSouls2;
+using SoulMemory.EldenRing;
 using SoulSplitter.Splits.DarkSouls2;
 using SoulSplitter.UI;
 using SoulSplitter.UI.DarkSouls2;
@@ -33,7 +34,11 @@ namespace SoulSplitter.Splitters
         private DarkSouls2ViewModel _darkSouls2ViewModel;
         private MainViewModel _mainViewModel;
         private readonly LiveSplitState _liveSplitState;
-        
+
+        // Shorthand for common properties
+        private bool IsLoading => _darkSouls2.IsLoading();
+        private Vector3f Pos => _darkSouls2.GetPosition(); // current position
+
         public DarkSouls2Splitter(LiveSplitState state, DarkSouls2 darkSouls2)
         {
             _darkSouls2 = darkSouls2;
@@ -86,9 +91,9 @@ namespace SoulSplitter.Splitters
             _darkSouls2ViewModel = mainViewModel.DarkSouls2ViewModel;
 
             _darkSouls2.TryRefresh();
-            
+
             _darkSouls2ViewModel.CurrentPosition = _darkSouls2.GetPosition();
-            
+
             UpdateTimer();
 
             UpdateAutoSplitter();
@@ -100,7 +105,7 @@ namespace SoulSplitter.Splitters
 
             return Result.Ok();
         }
-        
+
         #endregion
 
         #region Timer
@@ -108,7 +113,7 @@ namespace SoulSplitter.Splitters
         private bool _previousIsLoading;
         private readonly TimerModel _timerModel;
         private TimerState _timerState = TimerState.WaitForStart;
-        
+
         private void StartTimer()
         {
             _timerState = TimerState.Running;
@@ -124,45 +129,32 @@ namespace SoulSplitter.Splitters
             _timerModel.Reset();
         }
 
+        private bool InsideGameStartBox(Vector3f pos)
+        {
+            return pos.X < -213.0f && pos.X > -214.0f &&
+                   pos.Y < -322.0f && pos.Y > -323.0f;
+        }
         private void UpdateTimer()
         {
             switch (_timerState)
             {
                 case TimerState.WaitForStart:
-                    if (_darkSouls2ViewModel.StartAutomatically)
-                    {
-                        var loading = _darkSouls2.IsLoading();
-                        if (!loading)
-                        {
-                            var position = _darkSouls2.GetPosition();
-                            if(
-                                position.Y < -322.0f && position.Y > -323.0f &&
-                                position.X < -213.0f && position.X > -214.0f)
-                            {
-                                _timerModel.Start();
-                            }
-                        }
-                    }
+                    if (!_darkSouls2ViewModel.StartAutomatically)
+                        return;
+
+                    if (!IsLoading && InsideGameStartBox(Pos))
+                        _timerModel.Start();
                     break;
 
                 case TimerState.Running:
                     //Pause on loads
-                    if (_previousIsLoading != _darkSouls2.IsLoading())
-                    {
-                        if (_darkSouls2.IsLoading())
-                        {
-                            _liveSplitState.IsGameTimePaused = true;
-                        }
-                        else
-                        {
-                            _liveSplitState.IsGameTimePaused = false;
-                        }
-                    }
-                    _previousIsLoading = _darkSouls2.IsLoading();
+                    if (_previousIsLoading != IsLoading)
+                        _liveSplitState.IsGameTimePaused = IsLoading;
+                    _previousIsLoading = IsLoading;
                     break;
             }
         }
-        
+
         #endregion
 
         #region Autosplitting
@@ -189,79 +181,70 @@ namespace SoulSplitter.Splitters
         public void UpdateAutoSplitter()
         {
             if (_timerState != TimerState.Running)
-            {
                 return;
-            }
-            
-            foreach (var s in _splits)
+
+            foreach (var s in _splits.Where(sp => !sp.SplitTriggered))
             {
-                if (!s.SplitTriggered)
-                {
-                    if (!s.SplitConditionMet)
-                    {
-                        switch (s.SplitType)
-                        {
-                            default:
-                                throw new ArgumentException($"Unsupported split type {s.SplitType}");
+                // Condition must first be met ONCE
+                if (!SplitConditionMetEver(s))
+                    continue;
 
-                            case DarkSouls2SplitType.Flag:
-                                s.SplitConditionMet = _darkSouls2.ReadEventFlag(s.Flag);                                
-                                break;
+                // passed at least once
+                s.SplitConditionMet = true;
 
-                            case DarkSouls2SplitType.BossKill:
-                                s.SplitConditionMet = _darkSouls2.GetBossKillCount(s.BossKill.BossType) == s.BossKill.Count;                                
-                                break;
-
-                            case DarkSouls2SplitType.Attribute:
-                                s.SplitConditionMet = _darkSouls2.GetAttribute(s.Attribute.AttributeType) >= s.Attribute.Level;                                
-                                break;
-
-                            case DarkSouls2SplitType.Position:
-                                if (s.Position.X + _boxSize > _darkSouls2ViewModel.CurrentPosition.X &&
-                                    s.Position.X - _boxSize < _darkSouls2ViewModel.CurrentPosition.X &&
-
-                                    s.Position.Y + _boxSize > _darkSouls2ViewModel.CurrentPosition.Y &&
-                                    s.Position.Y - _boxSize < _darkSouls2ViewModel.CurrentPosition.Y &&
-
-                                    s.Position.Z + _boxSize > _darkSouls2ViewModel.CurrentPosition.Z &&
-                                    s.Position.Z - _boxSize < _darkSouls2ViewModel.CurrentPosition.Z)
-                                {
-                                    s.SplitConditionMet = true;
-                                }
-                                break;
-                        }
-                    }
-
-                    if (s.SplitConditionMet)
-                    {
-                        ResolveSplitTiming(s);
-                    }
-                }
+                // SplitTrigger condition:
+                if (SplitTriggerMet(s))
+                    TriggerSplit(s);
             }
         }
 
-        private void ResolveSplitTiming(Split s)
+        private bool SplitConditionMetEver(Split s)
+        {
+            // Met but not triggered:
+            if (s.SplitConditionMet)
+                return true;
+
+            switch (s.SplitType)
+            {
+                default:
+                    throw new ArgumentException($"Unsupported split type {s.SplitType}");
+
+                case DarkSouls2SplitType.Flag:
+                    return _darkSouls2.ReadEventFlag(s.Flag);
+
+                case DarkSouls2SplitType.BossKill:
+                    return _darkSouls2.GetBossKillCount(s.BossKill.BossType) == s.BossKill.Count;
+
+                case DarkSouls2SplitType.Attribute:
+                    return _darkSouls2.GetAttribute(s.Attribute.AttributeType) >= s.Attribute.Level;
+
+                case DarkSouls2SplitType.Position:
+                    return IsPositionWithinBox(s, _darkSouls2ViewModel.CurrentPosition);
+            }
+        }
+        private bool IsPositionWithinBox(Split s, Vector3f currpos)
+        {
+            return s.Position.X - _boxSize < currpos.X && s.Position.X + _boxSize > currpos.X &&
+                    s.Position.Y - _boxSize < currpos.Y && s.Position.Y + _boxSize > currpos.Y &&
+                    s.Position.Z - _boxSize < currpos.Z && s.Position.Z + _boxSize > currpos.Z;
+
+        }
+
+        private void TriggerSplit(Split s)
+        {
+            _timerModel.Split();
+            s.SplitTriggered = true;
+        }
+        private bool SplitTriggerMet(Split s)
         {
             switch (s.TimingType)
             {
-                default:
-                    throw new ArgumentException($"Unsupported timing type {s.TimingType}");
-
-                case TimingType.Immediate:
-                    _timerModel.Split();
-                    s.SplitTriggered = true;
-                    break;
-
-                case TimingType.OnLoading:
-                    if (_darkSouls2.IsLoading())
-                    {
-                        _timerModel.Split();
-                        s.SplitTriggered = true;
-                    }
-                    break;
+                case TimingType.Immediate: return true;
+                case TimingType.OnLoading: return _darkSouls2.IsLoading();
+                default: throw new ArgumentException($"Unsupported timing type {s.TimingType}");
             }
         }
         #endregion
-        
+
     }
 }
