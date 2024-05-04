@@ -118,7 +118,7 @@ namespace SoulSplitter.Splitters
         {
             _timerState = TimerState.Running;
             _liveSplitState.IsGameTimePaused = false;
-            _previousIsLoading = _darkSouls2.IsLoading();
+            _previousIsLoading = IsLoading;
             _timerModel.Start();
         }
 
