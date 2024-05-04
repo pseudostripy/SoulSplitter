@@ -65,10 +65,7 @@ namespace SoulSplitter.UI.Generic
         /// <summary>
         /// Used to compare items in the filtered combobox
         /// </summary>
-        public override string ToString()
-        {
-            return Name;
-        }
+        public override string ToString() => Name;
 
         #region INotifyPropertyChanged
         private bool SetField<U>(ref U field, U value, [CallerMemberName] string propertyName = null)

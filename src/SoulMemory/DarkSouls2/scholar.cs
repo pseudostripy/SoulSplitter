@@ -92,7 +92,7 @@ namespace SoulMemory.DarkSouls2
                 _position.ReadFloat(0x84)
             );
         }
-
+        
         public int GetBossKillCount(BossType bossType)
         {
             if (_bossCounters == null)
@@ -115,9 +115,7 @@ namespace SoulMemory.DarkSouls2
         public int GetAttribute(Attribute attribute)
         {
             if (_attributes == null)
-            {
                 return 0;
-            }
 
             var offset = _attributeOffsets[attribute];
             if (attribute == Attribute.SoulLevel)
@@ -127,19 +125,15 @@ namespace SoulMemory.DarkSouls2
             else
             {
                 var bytes = _attributes.ReadBytes(2, offset);
-                return (int)BitConverter.ToInt16(bytes, 0);
+                return BitConverter.ToInt16(bytes, 0);
             }
         }
 
         #region Reading event flags
-
-
         public bool ReadEventFlag(uint eventFlagId)
         {
             if (_eventFlagManager == null)
-            {
                 return false;
-            }
 
             var eventCategory = eventFlagId / 10000 * 0x89;
             var uVar1 = ((eventCategory - eventCategory / 0x1f >> 1) + eventCategory / 0x1f >> 4) * 31;

@@ -44,7 +44,8 @@ namespace cli
         [STAThread]
         static void Main(string[] args)
         {
-            TestUi();
+            //TestUi();
+            TestUi(false);
             return;
             ValidatePatterns();
 

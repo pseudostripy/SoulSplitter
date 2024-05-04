@@ -224,16 +224,14 @@ namespace SoulMemory.Native
         {
             //Make sure path is null terminated
             if(!dllPath.EndsWith("\0"))
-            {
-                dllPath = dllPath + '\0';
-            }
+                dllPath += '\0';
 
             //Write the name of the dll to be injected into a buffer
             var dllFilepathPointer = process.Allocate(dllPath.Length * Marshal.SizeOf(typeof(char)));
             process.WriteProcessMemory((long)dllFilepathPointer, Encoding.Default.GetBytes(dllPath));
 
             //Get the address of LoadLibraryA
-            var loadLibraryA = Kernel32.GetProcAddress(Kernel32.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+            var loadLibraryA = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
 
             //Execute LoadLibraryA inside the target process with the dll path as parameter
             process.Execute(loadLibraryA, dllFilepathPointer);

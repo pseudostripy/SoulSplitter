@@ -50,14 +50,11 @@ namespace SoulSplitter.UI.DarkSouls2
         #region add/remove splits ============================================================================================================================================
         public void AddSplit()
         {
-            if (NewSplitTimingType == null ||
-                NewSplitType == null ||
-                NewSplitValue == null)
-            {
+            if (NewSplitTimingType == null || NewSplitType == null || NewSplitValue == null)
                 return;
-            }
 
             var hierarchicalTimingType = Splits.FirstOrDefault(i => i.TimingType == NewSplitTimingType);
+            // find current matching TimingType
             if (hierarchicalTimingType == null)
             {
                 hierarchicalTimingType = new HierarchicalTimingTypeViewModel() { TimingType = NewSplitTimingType.Value };
@@ -158,6 +155,7 @@ namespace SoulSplitter.UI.DarkSouls2
             get => _newSplitType;
             set
             {
+                // init all false set the correct value later...
                 NewSplitPositionEnabled = false;
                 NewSplitBossKillEnabled = false;
                 NewSplitAttributeEnabled = false;
@@ -181,7 +179,7 @@ namespace SoulSplitter.UI.DarkSouls2
 
                     case DarkSouls2SplitType.Attribute:
                         NewSplitAttributeEnabled = true;
-                        NewSplitValue = new Splits.DarkSouls2.Attribute();
+                        NewSplitValue = new Attribute();
                         break;
 
                     case DarkSouls2SplitType.Flag:
@@ -283,6 +281,7 @@ namespace SoulSplitter.UI.DarkSouls2
             //When serializing the model, we can't serialize the parent relation, because that would be a circular reference. Instead, parent's are not serialized.
             //After deserializing, the parent relations must be restored.
 
+            //var test = Splits.SelectMany(s => s.Children))
             foreach (var timingType in Splits)
             {
                 foreach (var splitType in timingType.Children)
@@ -300,7 +299,12 @@ namespace SoulSplitter.UI.DarkSouls2
 
         #region Static UI source data ============================================================================================================================================
 
-        public static ObservableCollection<EnumFlagViewModel<BossType>> Bosses { get; set; } = new ObservableCollection<EnumFlagViewModel<BossType>>(Enum.GetValues(typeof(BossType)).Cast<BossType>().Select(i => new EnumFlagViewModel<BossType>(i)));
+        public static ObservableCollection<EnumFlagViewModel<BossType>> Bosses { get; set; } = new ObservableCollection<EnumFlagViewModel<BossType>>
+            ( 
+                Enum.GetValues(typeof(BossType)).Cast<BossType>()
+                    .Select(i => new EnumFlagViewModel<BossType>(i)) 
+            );
+        
 
 
         #endregion
