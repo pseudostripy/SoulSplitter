@@ -168,12 +168,13 @@ namespace SoulSplitter.Splitters
 
         public void StartAutoSplitting()
         {
-            _splits = (
-                from timingType in _darkSouls2ViewModel.Splits
-                from splitType in timingType.Children
-                from split in splitType.Children
-                select new Split(timingType.TimingType, splitType.SplitType, split.Split)
-            ).ToList();
+            _splits = _darkSouls2ViewModel.Splits;
+            //_splits = (
+            //    from timingType in _darkSouls2ViewModel.TimingTypeVMs
+            //    from splitType in timingType.Children
+            //    from split in splitType.Children
+            //    select new Split(timingType.TimingType, splitType.SplitType, split.Split)
+            //).ToList();
         }
 
 
@@ -204,29 +205,47 @@ namespace SoulSplitter.Splitters
             if (s.SplitConditionMet)
                 return true;
 
-            switch (s.SplitType)
+            switch (s)
             {
                 default:
                     throw new ArgumentException($"Unsupported split type {s.SplitType}");
 
-                case DarkSouls2SplitType.Flag:
-                    return _darkSouls2.ReadEventFlag(s.Flag);
+                case FlagSplit fs:
+                    return _darkSouls2.ReadEventFlag(fs.Flag);
 
-                case DarkSouls2SplitType.BossKill:
-                    return _darkSouls2.GetBossKillCount(s.BossKill.BossType) == s.BossKill.Count;
+                case BossKillSplit bks:
+                    return _darkSouls2.GetBossKillCount(bks.BossType) == bks.Count;
 
-                case DarkSouls2SplitType.Attribute:
-                    return _darkSouls2.GetAttribute(s.Attribute.AttributeType) >= s.Attribute.Level;
+                case PositionSplit ps:
+                    return IsPositionWithinBox(ps.Position, Pos);
 
-                case DarkSouls2SplitType.Position:
-                    return IsPositionWithinBox(s, _darkSouls2ViewModel.CurrentPosition);
+                case LvlAttrSplit lvs:
+                    return _darkSouls2.GetAttribute(lvs.LvlAttrType) >= lvs.Level;
             }
+
+            //switch (s.SplitType)
+            //{
+            //    default:
+            //        throw new ArgumentException($"Unsupported split type {s.SplitType}");
+
+            //    case DS2SplitType.Flag:
+            //        return _darkSouls2.ReadEventFlag(s.Flag);
+
+            //    case DS2SplitType.BossKill:
+            //        return _darkSouls2.GetBossKillCount(s.BossKill.BossType) == s.BossKill.Count;
+
+            //    case DS2SplitType.LvlAttr:
+            //        return _darkSouls2.GetAttribute(s.Attribute.AttributeType) >= s.Attribute.Level;
+
+            //    case DS2SplitType.Position:
+            //        return IsPositionWithinBox(s, _darkSouls2ViewModel.CurrentPosition);
+            //}
         }
-        private bool IsPositionWithinBox(Split s, Vector3f currpos)
+        private bool IsPositionWithinBox(Vector3f splitBox, Vector3f currpos)
         {
-            return s.Position.X - _boxSize < currpos.X && s.Position.X + _boxSize > currpos.X &&
-                    s.Position.Y - _boxSize < currpos.Y && s.Position.Y + _boxSize > currpos.Y &&
-                    s.Position.Z - _boxSize < currpos.Z && s.Position.Z + _boxSize > currpos.Z;
+            return splitBox.X - _boxSize < currpos.X && splitBox.X + _boxSize > currpos.X &&
+                    splitBox.Y - _boxSize < currpos.Y && splitBox.Y + _boxSize > currpos.Y &&
+                    splitBox.Z - _boxSize < currpos.Z && splitBox.Z + _boxSize > currpos.Z;
 
         }
 

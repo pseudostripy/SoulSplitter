@@ -20,43 +20,48 @@ using SoulSplitter.UI.Generic;
 
 namespace SoulSplitter.Splits.DarkSouls2
 {
-    internal class Split
+    internal abstract class Split
     {
-        public Split(TimingType timingType, DS2SplitType darkSouls2SplitType, object split)
+        public Split(TimingType timingType, DS2SplitType splitType)
         {
             TimingType = timingType;
-            SplitType = darkSouls2SplitType;
-
-            switch (SplitType)
-            {
-                default:
-                    throw new ArgumentException($"unsupported split type {SplitType}");
-
-                case DS2SplitType.Position:
-                    Position = (Vector3f)split;
-                    break;
-
-                case DS2SplitType.BossKill:
-                    BossKill = (BossKill)split;
-                    break;
-
-                case DS2SplitType.Attribute:
-                    Attribute = (Attribute)split;
-                    break;
-
-                case DS2SplitType.Flag:
-                    Flag = (uint)split;
-                    break;
-            }
+            SplitType = splitType;
         }
+        //public Split(TimingType timingType, DS2SplitType splitType)
+        //{
+        //    TimingType = timingType;
+        //    SplitType = splitType;
+
+        //    //switch (SplitType)
+        //    //{
+        //    //    default:
+        //    //        throw new ArgumentException($"unsupported split type {SplitType}");
+
+        //    //    case DS2SplitType.Position:
+        //    //        Position = (Vector3f)split;
+        //    //        break;
+
+        //    //    case DS2SplitType.BossKill:
+        //    //        BossKill = (BossKill)split;
+        //    //        break;
+
+        //    //    case DS2SplitType.Attribute:
+        //    //        Attribute = (Attribute)split;
+        //    //        break;
+
+        //    //    case DS2SplitType.Flag:
+        //    //        Flag = (uint)split;
+        //    //        break;
+        //    //}
+        //}
 
         public readonly TimingType TimingType;
         public readonly DS2SplitType SplitType;
         
-        public readonly uint Flag;
-        public readonly Vector3f Position;
-        public readonly BossKill BossKill;
-        public readonly Attribute Attribute;
+        //public readonly uint Flag;
+        //public readonly Vector3f Position;
+        //public readonly BossKill BossKill;
+        //public readonly Attribute Attribute;
 
         /// <summary>
         /// Set to true when split conditions are met. Does not trigger a split until timing conditions are met

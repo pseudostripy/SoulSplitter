@@ -273,14 +273,14 @@ namespace SoulSplitter.UI.EldenRing
             var hierarchicalTimingType = Splits.FirstOrDefault(i => i.TimingType == NewSplitTimingType);
             if (hierarchicalTimingType == null)
             {
-                hierarchicalTimingType = new HierarchicalTimingTypeViewModel() { TimingType = NewSplitTimingType.Value };
+                hierarchicalTimingType = new TimingTypeVM() { TimingType = NewSplitTimingType.Value };
                 Splits.Add(hierarchicalTimingType);
             }
 
             var hierarchicalSplitType = hierarchicalTimingType.Children.FirstOrDefault(i => i.EldenRingSplitType == NewSplitType);
             if (hierarchicalSplitType == null)
             {
-                hierarchicalSplitType = new HierarchicalSplitTypeViewModel() { EldenRingSplitType = NewSplitType.Value, Parent = hierarchicalTimingType };
+                hierarchicalSplitType = new SplitTypeVM() { EldenRingSplitType = NewSplitType.Value, Parent = hierarchicalTimingType };
                 hierarchicalTimingType.Children.Add(hierarchicalSplitType);
             }
 
@@ -292,42 +292,42 @@ namespace SoulSplitter.UI.EldenRing
                 case EldenRingSplitType.Boss:
                     if (hierarchicalSplitType.Children.All(i => (Boss)i.Split != NewSplitBoss))
                     {
-                        hierarchicalSplitType.Children.Add(new HierarchicalSplitViewModel() { Split = NewSplitBoss.Value, Parent = hierarchicalSplitType });
+                        hierarchicalSplitType.Children.Add(new SplitParamsVM() { Split = NewSplitBoss.Value, Parent = hierarchicalSplitType });
                     }
                     break;
 
                 case EldenRingSplitType.Grace:
                     if (hierarchicalSplitType.Children.All(i => (Grace)i.Split != NewSplitGrace))
                     {
-                        hierarchicalSplitType.Children.Add(new HierarchicalSplitViewModel() { Split = NewSplitGrace.Value, Parent = hierarchicalSplitType });
+                        hierarchicalSplitType.Children.Add(new SplitParamsVM() { Split = NewSplitGrace.Value, Parent = hierarchicalSplitType });
                     }
                     break;
 
                 case EldenRingSplitType.ItemPickup:
                     if (hierarchicalSplitType.Children.All(i => (ItemPickup)i.Split != NewSplitItemPickup))
                     {
-                        hierarchicalSplitType.Children.Add(new HierarchicalSplitViewModel() { Split = NewSplitItemPickup.Value, Parent = hierarchicalSplitType });
+                        hierarchicalSplitType.Children.Add(new SplitParamsVM() { Split = NewSplitItemPickup.Value, Parent = hierarchicalSplitType });
                     }
                     break;
 
                 case EldenRingSplitType.Flag:
                     if (hierarchicalSplitType.Children.All(i => (uint)i.Split != NewSplitFlag))
                     {
-                        hierarchicalSplitType.Children.Add(new HierarchicalSplitViewModel() { Split = NewSplitFlag.Value, Parent = hierarchicalSplitType });
+                        hierarchicalSplitType.Children.Add(new SplitParamsVM() { Split = NewSplitFlag.Value, Parent = hierarchicalSplitType });
                     }
                     break;
 
                 case EldenRingSplitType.Item:
                     if (hierarchicalSplitType.Children.All(i => (Item)i.Split != NewSplitItem))
                     { 
-                        hierarchicalSplitType.Children.Add(new HierarchicalSplitViewModel() { Split = NewSplitItem, Parent = hierarchicalSplitType });
+                        hierarchicalSplitType.Children.Add(new SplitParamsVM() { Split = NewSplitItem, Parent = hierarchicalSplitType });
                     }
                     break;
 
                 case EldenRingSplitType.Position:
                     if (hierarchicalSplitType.Children.All(i => i.Split.ToString() != NewSplitPosition.Position.ToString()))
                     {
-                        hierarchicalSplitType.Children.Add(new HierarchicalSplitViewModel() { Split = NewSplitPosition.Position, Parent = hierarchicalSplitType });
+                        hierarchicalSplitType.Children.Add(new SplitParamsVM() { Split = NewSplitPosition.Position, Parent = hierarchicalSplitType });
                     }
                     break;
             }
@@ -355,7 +355,7 @@ namespace SoulSplitter.UI.EldenRing
         }
         private bool _enabledRemoveSplit;
 
-        public HierarchicalSplitViewModel SelectedSplit
+        public SplitParamsVM SelectedSplit
         {
             get => _selectedSplit;
             set
@@ -364,7 +364,7 @@ namespace SoulSplitter.UI.EldenRing
                 EnabledRemoveSplit = SelectedSplit != null;
             }
         }
-        private HierarchicalSplitViewModel _selectedSplit = null;
+        private SplitParamsVM _selectedSplit = null;
         
         public void RemoveSplit()
         {
@@ -410,7 +410,7 @@ namespace SoulSplitter.UI.EldenRing
         #endregion
 
 
-        public ObservableCollection<HierarchicalTimingTypeViewModel> Splits { get; set; }= new ObservableCollection<HierarchicalTimingTypeViewModel>();
+        public ObservableCollection<TimingTypeVM> Splits { get; set; }= new ObservableCollection<TimingTypeVM>();
         
         //source lists
         public static ObservableCollection<BossViewModel> Bosses { get; set; } = new ObservableCollection<BossViewModel>(Enum.GetValues(typeof(Boss)).Cast<Boss>().Select(i => new BossViewModel(i)));

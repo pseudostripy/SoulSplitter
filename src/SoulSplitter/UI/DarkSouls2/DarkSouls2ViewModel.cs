@@ -20,12 +20,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 using SoulMemory;
 using SoulMemory.DarkSouls2;
 using SoulSplitter.Splits.DarkSouls2;
 using SoulSplitter.UI.Generic;
-using Attribute = SoulSplitter.Splits.DarkSouls2.Attribute;
+using LvlAttrType = SoulSplitter.Splits.DarkSouls2.LvlAttrType;
 
 namespace SoulSplitter.UI.DarkSouls2
 {
@@ -46,65 +47,117 @@ namespace SoulSplitter.UI.DarkSouls2
         }
         private Vector3f _currentPosition = new Vector3f(0f,0f,0f);
 
+        internal List<Split> Splits = new List<Split>();
 
         #region add/remove splits ============================================================================================================================================
+        private Split CreateSplit()
+        {
+            // something likely gone wrong:
+            if (NewSplitTimingType == null || NewSplitType == null || NewSplitValue == null)
+                return null;
+
+            var timing = NewSplitTimingType.Value;
+            switch (NewSplitType)
+            {
+                default:
+                    throw new ArgumentException($"Split type not supported: {NewSplitType}");
+
+                case DS2SplitType.Position:
+                    return new PositionSplit(timing, (Vector3f)NewSplitValue); // TODO
+
+                case DS2SplitType.BossKill:
+                    var BK = (BossKill)NewSplitValue;
+                    return new BossKillSplit(timing, BK.BossType, BK.Count);
+
+                case DS2SplitType.LvlAttr:
+                    var vmlvlattr = (LvlAttrType)NewSplitValue; // TODO
+                    return new LvlAttrSplit(timing, vmlvlattr.AttributeType, 10); // TODO
+
+                case DS2SplitType.Flag:
+                    return new FlagSplit(timing, (uint)NewSplitValue);
+            }
+        }
+        private SplitTypeVM FindInsertionParent(Split split)
+        {
+            // get timing container or make new one if unique
+            var timingVM = TimingTypeVMs.Where(v => v.TimingType == split.TimingType).FirstOrDefault() 
+                            ?? new TimingTypeVM() { TimingType = split.TimingType };
+
+            // get splitType container or make new one if unique
+            var splitTypeVM = timingVM.Children.Where(v => v.SplitType == split.SplitType).FirstOrDefault()
+                            ?? new SplitTypeVM() { Parent = timingVM, SplitType = split.SplitType };
+            
+            // todo check if duplicate
+            return splitTypeVM;
+        }
+
         public void AddSplit()
         {
             if (NewSplitTimingType == null || NewSplitType == null || NewSplitValue == null)
                 return;
 
-            var hierarchicalTimingType = Splits.FirstOrDefault(i => i.TimingType == NewSplitTimingType);
-            // find current matching TimingType
-            if (hierarchicalTimingType == null)
-            {
-                hierarchicalTimingType = new HierarchicalTimingTypeViewModel() { TimingType = NewSplitTimingType.Value };
-                Splits.Add(hierarchicalTimingType);
-            }
+            // Create new split object:
+            var split = CreateSplit();
 
-            var hierarchicalSplitType = hierarchicalTimingType.Children.FirstOrDefault(i => i.SplitType == NewSplitType);
-            if (hierarchicalSplitType == null)
-            {
-                hierarchicalSplitType = new HierarchicalSplitTypeViewModel() { SplitType = NewSplitType.Value, Parent = hierarchicalTimingType };
-                hierarchicalTimingType.Children.Add(hierarchicalSplitType);
-            }
+            // Find where to add new split:
+            var vm = FindInsertionParent(split);
+            var splitpars = new SplitParamsVM() { Parent = vm }; // TODO
+            vm.AddChild(splitpars);
 
-            switch (NewSplitType)
-            {
-                default:
-                    throw new ArgumentException($"split type not supported: {NewSplitType}");
+            // Add to backend splits:
+            Splits.Add(split);
 
-                case DarkSouls2SplitType.Position:
-                    var position = (Vector3f)NewSplitValue;
-                    if (hierarchicalSplitType.Children.All(i => ((Vector3f)i.Split).ToString() != position.ToString()))
-                    {
-                        hierarchicalSplitType.Children.Add(new HierarchicalSplitViewModel() { Split = position, Parent = hierarchicalSplitType });
-                    }
-                    break;
+            //var timingTypeVM = TimingTypeVMs.FirstOrDefault(i => i.TimingType == NewSplitTimingType);
+            //if (timingTypeVM == null)
+            //{
+            //    timingTypeVM = new TimingTypeVM() { TimingType = NewSplitTimingType.Value };
+            //    TimingTypeVMs.Add(timingTypeVM);
+            //}
 
-                case DarkSouls2SplitType.BossKill:
-                    var bossKill = (BossKill)NewSplitValue;
-                    if (hierarchicalSplitType.Children.All(i => ((BossKill)i.Split).ToString() != bossKill.ToString()))
-                    {
-                        hierarchicalSplitType.Children.Add(new HierarchicalSplitViewModel() { Split = bossKill, Parent = hierarchicalSplitType });
-                    }
-                    break;
+            //var hierarchicalSplitType = timingTypeVM.Children.FirstOrDefault(i => i.SplitType == NewSplitType);
+            //if (hierarchicalSplitType == null)
+            //{
+            //    hierarchicalSplitType = new SplitTypeVM() { SplitType = NewSplitType.Value, Parent = timingTypeVM };
+            //    timingTypeVM.Children.Add(hierarchicalSplitType);
+            //}
 
-                case DarkSouls2SplitType.Attribute:
-                    var attribute = (Attribute)NewSplitValue;
-                    if (hierarchicalSplitType.Children.All(i => ((Attribute)i.Split).ToString() != attribute.ToString()))
-                    {
-                        hierarchicalSplitType.Children.Add(new HierarchicalSplitViewModel() { Split = attribute, Parent = hierarchicalSplitType });
-                    }
-                    break;
+            //switch (NewSplitType)
+            //{
+            //    default:
+            //        throw new ArgumentException($"split type not supported: {NewSplitType}");
 
-                case DarkSouls2SplitType.Flag:
-                    var flag = (uint)NewSplitValue;
-                    if (hierarchicalSplitType.Children.All(i => (uint)i.Split != flag))
-                    {
-                        hierarchicalSplitType.Children.Add(new HierarchicalSplitViewModel() { Split = flag, Parent = hierarchicalSplitType });
-                    }
-                    break;
-            }
+            //    case DS2SplitType.Position:
+            //        var position = (Vector3f)NewSplitValue;
+            //        if (hierarchicalSplitType.Children.All(i => ((Vector3f)i.Split).ToString() != position.ToString()))
+            //        {
+            //            hierarchicalSplitType.Children.Add(new SplitParamsVM() { Split = position, Parent = hierarchicalSplitType });
+            //        }
+            //        break;
+
+            //    case DS2SplitType.BossKill:
+            //        var bossKill = (BossKill)NewSplitValue;
+            //        if (hierarchicalSplitType.Children.All(i => ((BossKill)i.Split).ToString() != bossKill.ToString()))
+            //        {
+            //            hierarchicalSplitType.Children.Add(new SplitParamsVM() { Split = bossKill, Parent = hierarchicalSplitType });
+            //        }
+            //        break;
+
+            //    case DS2SplitType.LvlAttr:
+            //        var attribute = (LvlAttrType)NewSplitValue;
+            //        if (hierarchicalSplitType.Children.All(i => ((LvlAttrType)i.Split).ToString() != attribute.ToString()))
+            //        {
+            //            hierarchicalSplitType.Children.Add(new SplitParamsVM() { Split = attribute, Parent = hierarchicalSplitType });
+            //        }
+            //        break;
+
+            //    case DS2SplitType.Flag:
+            //        var flag = (uint)NewSplitValue;
+            //        if (hierarchicalSplitType.Children.All(i => (uint)i.Split != flag))
+            //        {
+            //            hierarchicalSplitType.Children.Add(new SplitParamsVM() { Split = flag, Parent = hierarchicalSplitType });
+            //        }
+            //        break;
+            //}
 
             NewSplitTimingType = null;
             NewSplitType = null;
@@ -123,7 +176,7 @@ namespace SoulSplitter.UI.DarkSouls2
                     nextParent.Children.Remove(parent);
                     if (nextParent.Children.Count <= 0)
                     {
-                        Splits.Remove(nextParent);
+                        TimingTypeVMs.Remove(nextParent);
                     }
                 }
 
@@ -132,7 +185,7 @@ namespace SoulSplitter.UI.DarkSouls2
         }
 
         
-        public ObservableCollection<HierarchicalTimingTypeViewModel> Splits { get; set; } = new ObservableCollection<HierarchicalTimingTypeViewModel>();
+        public ObservableCollection<TimingTypeVM> TimingTypeVMs { get; set; } = new ObservableCollection<TimingTypeVM>();
         #endregion
 
         #region Properties for new splits ============================================================================================================================================
@@ -150,7 +203,7 @@ namespace SoulSplitter.UI.DarkSouls2
         private TimingType? _newSplitTimingType = null;
 
         [XmlIgnore]
-        public DarkSouls2SplitType? NewSplitType
+        public DS2SplitType? NewSplitType
         {
             get => _newSplitType;
             set
@@ -167,22 +220,22 @@ namespace SoulSplitter.UI.DarkSouls2
                     case null:
                         break;
 
-                    case DarkSouls2SplitType.Position:
+                    case DS2SplitType.Position:
                         NewSplitPositionEnabled = true;
                         NewSplitValue = new Vector3f(CurrentPosition.X, CurrentPosition.Y, CurrentPosition.Z);
                         break;
 
-                    case DarkSouls2SplitType.BossKill:
+                    case DS2SplitType.BossKill:
                         NewSplitBossKillEnabled = true;
                         NewSplitValue = new BossKill();
                         break;
 
-                    case DarkSouls2SplitType.Attribute:
+                    case DS2SplitType.LvlAttr:
                         NewSplitAttributeEnabled = true;
-                        NewSplitValue = new Attribute();
+                        NewSplitValue = new SoulMemory.DarkSouls2.LvlAttr();
                         break;
 
-                    case DarkSouls2SplitType.Flag:
+                    case DS2SplitType.Flag:
                         NewSplitFlagEnabled = true;
                         break;
 
@@ -191,7 +244,7 @@ namespace SoulSplitter.UI.DarkSouls2
                 }
             }
         }
-        private DarkSouls2SplitType? _newSplitType = null;
+        private DS2SplitType? _newSplitType = null;
 
         [XmlIgnore]
         public object NewSplitValue
@@ -262,7 +315,7 @@ namespace SoulSplitter.UI.DarkSouls2
         private bool _removeSplitEnabled = false;
 
         [XmlIgnore]
-        public HierarchicalSplitViewModel SelectedSplit
+        public SplitParamsVM SelectedSplit
         {
             get => _selectedSplit;
             set
@@ -271,7 +324,7 @@ namespace SoulSplitter.UI.DarkSouls2
                 RemoveSplitEnabled = SelectedSplit != null;
             }
         }
-        private HierarchicalSplitViewModel _selectedSplit = null;
+        private SplitParamsVM _selectedSplit = null;
 
         #endregion
 
@@ -282,14 +335,14 @@ namespace SoulSplitter.UI.DarkSouls2
             //After deserializing, the parent relations must be restored.
 
             //var test = Splits.SelectMany(s => s.Children))
-            foreach (var timingType in Splits)
+            foreach (var chTimingType in TimingTypeVMs)
             {
-                foreach (var splitType in timingType.Children)
+                foreach (var chSplitType in chTimingType.Children)
                 {
-                    splitType.Parent = timingType;
-                    foreach (var split in splitType.Children)
+                    chSplitType.Parent = chTimingType;
+                    foreach (var split in chSplitType.Children)
                     {
-                        split.Parent = splitType;
+                        split.Parent = chSplitType;
                     }
                 }
             }

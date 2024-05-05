@@ -483,13 +483,13 @@
             SelectedItemChanged="SplitsTreeView_OnSelectedItemChanged">
 
             <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type eldenRing:HierarchicalTimingTypeViewModel}" ItemsSource="{Binding Children}">
+                <HierarchicalDataTemplate DataType="{x:Type eldenRing:TimingTypeVM}" ItemsSource="{Binding Children}">
                     <TextBlock Text="{Binding TimingType, Converter={StaticResource EnumDisplayNameConverter}}"/>
                 </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type eldenRing:HierarchicalSplitTypeViewModel}" ItemsSource="{Binding Children}">
+                <HierarchicalDataTemplate DataType="{x:Type eldenRing:SplitTypeVM}" ItemsSource="{Binding Children}">
                     <TextBlock Text="{Binding EldenRingSplitType, Converter={StaticResource EnumDisplayNameConverter}}"/>
                 </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type eldenRing:HierarchicalSplitViewModel}">
+                <HierarchicalDataTemplate DataType="{x:Type eldenRing:SplitParamsVM}">
                     <TextBlock Text="{Binding Split, Converter={StaticResource SplitObjectToDescriptionConverter}}"/>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>

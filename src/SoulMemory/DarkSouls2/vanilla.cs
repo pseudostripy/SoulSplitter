@@ -108,7 +108,7 @@ namespace SoulMemory.DarkSouls2
             return _loadState.ReadUInt32(0x1D4) == 1;
         }
 
-        public int GetAttribute(Attribute attribute)
+        public int GetAttribute(LvlAttr attribute)
         {
             if (_attributes == null)
             {
@@ -116,7 +116,7 @@ namespace SoulMemory.DarkSouls2
             }
 
             var offset = _attributeOffsets[attribute];
-            if (attribute == Attribute.SoulLevel)
+            if (attribute == LvlAttr.SoulLevel)
             {
                 return _attributes.ReadInt32(offset);
             }
@@ -183,18 +183,18 @@ namespace SoulMemory.DarkSouls2
 
         #region Lookup tables
 
-        private readonly Dictionary<Attribute, long> _attributeOffsets = new Dictionary<Attribute, long>()
+        private readonly Dictionary<LvlAttr, long> _attributeOffsets = new Dictionary<LvlAttr, long>()
         {
-            { Attribute.SoulLevel   , 0xcc},
-            { Attribute.Vigor       , 0x4},
-            { Attribute.Endurance   , 0x6},
-            { Attribute.Vitality    , 0x8},
-            { Attribute.Attunement  , 0xa},
-            { Attribute.Strength    , 0xc},
-            { Attribute.Dexterity   , 0xe},
-            { Attribute.Adaptability, 0x14},
-            { Attribute.Intelligence, 0x10},
-            { Attribute.Faith       , 0x12},
+            { LvlAttr.SoulLevel   , 0xcc},
+            { LvlAttr.Vigor       , 0x4},
+            { LvlAttr.Endurance   , 0x6},
+            { LvlAttr.Vitality    , 0x8},
+            { LvlAttr.Attunement  , 0xa},
+            { LvlAttr.Strength    , 0xc},
+            { LvlAttr.Dexterity   , 0xe},
+            { LvlAttr.Adaptability, 0x14},
+            { LvlAttr.Intelligence, 0x10},
+            { LvlAttr.Faith       , 0x12},
         };
 
 

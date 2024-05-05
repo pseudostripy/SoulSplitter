@@ -19,7 +19,7 @@ using System.Xml.Serialization;
 namespace SoulMemory.DarkSouls2
 {
     [XmlType(Namespace = "SoulMemory.DarkSouls2")]
-    public enum Attribute
+    public enum LvlAttr
     {
         SoulLevel,
         Vigor,

@@ -14,13 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+using System;
+using SoulMemory;
+using SoulMemory.DarkSouls2;
+using SoulSplitter.UI.Generic;
+
 namespace SoulSplitter.Splits.DarkSouls2
 {
-    public enum DarkSouls2SplitType
+    internal class LvlAttrSplit : Split
     {
-        Position,
-        BossKill,
-        Attribute,
-        Flag,
+        public LvlAttrSplit(TimingType timingType, LvlAttr lvlAttrType, int level) : base(timingType,DS2SplitType.LvlAttr)
+        {
+            LvlAttrType = lvlAttrType;
+            Level = level;
+        }
+
+        public readonly LvlAttr LvlAttrType;
+        public readonly int Level;
     }
 }

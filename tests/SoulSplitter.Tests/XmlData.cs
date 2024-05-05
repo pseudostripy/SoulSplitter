@@ -37,52 +37,52 @@ namespace SoulSplitter.Tests
     <StartAutomatically>true</StartAutomatically>
     <OverwriteIgtOnStart>false</OverwriteIgtOnStart>
     <Splits>
-      <HierarchicalTimingTypeViewModel>
+      <TimingTypeVM>
         <TimingType xmlns=""Sekiro"">Immediate</TimingType>
         <Children xmlns=""Sekiro"">
-          <HierarchicalSplitTypeViewModel>
+          <SplitTypeVM>
             <SplitType>Boss</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">GyoubuMasatakaOniwa</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
-          <HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
+          <SplitTypeVM>
             <SplitType>Idol</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""Idol"">DragonspringHirataEstate</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
-          <HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
+          <SplitTypeVM>
             <SplitType>Position</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xmlns:q1=""SoulMemory"" xsi:type=""q1:Vector3f"">
                   <q1:X>1</q1:X>
                   <q1:Y>2</q1:Y>
                   <q1:Z>3</q1:Z>
                 </Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
         </Children>
-      </HierarchicalTimingTypeViewModel>
-      <HierarchicalTimingTypeViewModel>
+      </TimingTypeVM>
+      <TimingTypeVM>
         <TimingType xmlns=""Sekiro"">OnLoading</TimingType>
         <Children xmlns=""Sekiro"">
-          <HierarchicalSplitTypeViewModel>
+          <SplitTypeVM>
             <SplitType>Flag</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">123456</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
         </Children>
-      </HierarchicalTimingTypeViewModel>
+      </TimingTypeVM>
     </Splits>
   </SekiroViewModel>
   <EldenRingViewModel>
@@ -99,23 +99,23 @@ namespace SoulSplitter.Tests
   <SekiroViewModel>
     <StartAutomatically>true</StartAutomatically>
     <Splits>
-      <HierarchicalTimingTypeViewModel>
+      <TimingTypeVM>
         <TimingType xmlns=""Sekiro"">Immediate</TimingType>
         <Children xmlns=""Sekiro"">
-          <HierarchicalSplitTypeViewModel>
+          <SplitTypeVM>
             <SplitType>Position</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""Vector3f"">
                   <X xmlns="""">-304.803772</X>
                   <Y xmlns="""">-53.6740761</Y>
                   <Z xmlns="""">305.3302</Z>
                 </Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
         </Children>
-      </HierarchicalTimingTypeViewModel>
+      </TimingTypeVM>
     </Splits>
   </SekiroViewModel>
   <EldenRingViewModel>
@@ -123,95 +123,95 @@ namespace SoulSplitter.Tests
     <LockIgtToZero>false</LockIgtToZero>
     <EnabledRemoveSplit>false</EnabledRemoveSplit>
     <Splits>
-      <HierarchicalTimingTypeViewModel>
+      <TimingTypeVM>
         <TimingType>Immediate</TimingType>
         <Children>
-          <HierarchicalSplitTypeViewModel>
+          <SplitTypeVM>
             <EldenRingSplitType>Flag</EldenRingSplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">60000</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">1034447900</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">11007175</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">13007150</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
-          <HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
+          <SplitTypeVM>
             <EldenRingSplitType>Grace</EldenRingSplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""Grace"">Gatefront</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Grace"">StormhillShack</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Grace"">SouthRayaLucariaGate</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Grace"">MainAcademyGate</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Grace"">DragonTempleRooftop</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
         </Children>
-      </HierarchicalTimingTypeViewModel>
-      <HierarchicalTimingTypeViewModel>
+      </TimingTypeVM>
+      <TimingTypeVM>
         <TimingType>OnLoading</TimingType>
         <Children>
-          <HierarchicalSplitTypeViewModel>
+          <SplitTypeVM>
             <EldenRingSplitType>Grace</EldenRingSplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""Grace"">LiurniaHighwaySouth</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Grace"">DragonTemple</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Grace"">TempleOfEiglay</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Grace"">TheFourBelfries</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
-          <HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
+          <SplitTypeVM>
             <EldenRingSplitType>Flag</EldenRingSplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">1034457100</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">520670</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">16007020</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
-          <HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
+          <SplitTypeVM>
             <EldenRingSplitType>Boss</EldenRingSplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">GodskinDuoCrumblingFarumAzula</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">MalikethTheBlackBladeCrumblingFarumAzula</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
         </Children>
-      </HierarchicalTimingTypeViewModel>
+      </TimingTypeVM>
     </Splits>
   </EldenRingViewModel>
 <DarkSouls1ViewModel />
@@ -237,142 +237,142 @@ namespace SoulSplitter.Tests
   <DarkSouls3ViewModel>
     <StartAutomatically>true</StartAutomatically>
     <Splits>
-      <HierarchicalTimingTypeViewModel>
+      <TimingTypeVM>
         <TimingType xmlns=""DarkSouls3"">OnLoading</TimingType>
         <Children xmlns=""DarkSouls3"">
-          <HierarchicalSplitTypeViewModel>
+          <SplitTypeVM>
             <SplitType>Boss</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">IudexGundyr</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">VordtOfTheBorealValley</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">CurseRottedGreatwood</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">DeaconsOfTheDeep</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">PontiffSulyvahn</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">AldrichDevourerOfGods</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">YhormTheGiant</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">OceirosTheConsumedKing</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">ChampionGundyr</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">DragonslayerArmour</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">LothricYoungerPrince</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">AncientWyvern</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">DarkeaterMidir</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">HalflightSpearOfTheChurch</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">SlaveKnightGael</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">SisterFriede</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">ChampionsGravetenderAndGravetenderGreatwolf</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">SoulOfCinder</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">OldDemonKing</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">NamelessKing</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">HighLordWolnir</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
-          <HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
+          <SplitTypeVM>
             <SplitType>Flag</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">133</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">70000109</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">25105032</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">25105003</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">64500630</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">14100510</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
-          <HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
+          <SplitTypeVM>
             <SplitType>Attribute</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""Attribute"">
                   <AttributeType>Dexterity</AttributeType>
                   <Level>39</Level>
                 </Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
         </Children>
-      </HierarchicalTimingTypeViewModel>
-      <HierarchicalTimingTypeViewModel>
+      </TimingTypeVM>
+      <TimingTypeVM>
         <TimingType xmlns=""DarkSouls3"">Immediate</TimingType>
         <Children xmlns=""DarkSouls3"">
-          <HierarchicalSplitTypeViewModel>
+          <SplitTypeVM>
             <SplitType>Flag</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">13000885</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
-          <HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
+          <SplitTypeVM>
             <SplitType>Bonfire</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""Bonfire"">OceirosTheConsumedKing</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
-          <HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
+          <SplitTypeVM>
             <SplitType>ItemPickup</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""ItemPickup"">CovenantWarriorOfSunlightRank1SunlightShield</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
         </Children>
-      </HierarchicalTimingTypeViewModel>
+      </TimingTypeVM>
     </Splits>
   </DarkSouls3ViewModel>
   <SekiroViewModel>
@@ -472,142 +472,142 @@ namespace SoulSplitter.Tests
   <DarkSouls3ViewModel>
     <StartAutomatically>true</StartAutomatically>
     <Splits>
-      <HierarchicalTimingTypeViewModel>
+      <TimingTypeVM>
         <TimingType xmlns=""DarkSouls3"">OnLoading</TimingType>
         <Children xmlns=""DarkSouls3"">
-          <HierarchicalSplitTypeViewModel>
+          <SplitTypeVM>
             <SplitType>Boss</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">IudexGundyr</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">VordtOfTheBorealValley</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">CurseRottedGreatwood</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">DeaconsOfTheDeep</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">PontiffSulyvahn</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">AldrichDevourerOfGods</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">YhormTheGiant</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">OceirosTheConsumedKing</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">ChampionGundyr</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">DragonslayerArmour</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">LothricYoungerPrince</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">AncientWyvern</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">DarkeaterMidir</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">HalflightSpearOfTheChurch</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">SlaveKnightGael</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">SisterFriede</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">ChampionsGravetenderAndGravetenderGreatwolf</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">SoulOfCinder</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">OldDemonKing</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">NamelessKing</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""Boss"">HighLordWolnir</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
-          <HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
+          <SplitTypeVM>
             <SplitType>Flag</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">133</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">70000109</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">25105032</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">25105003</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">64500630</Split>
-              </HierarchicalSplitViewModel>
-              <HierarchicalSplitViewModel>
+              </SplitParamsVM>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">14100510</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
-          <HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
+          <SplitTypeVM>
             <SplitType>Attribute</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""Attribute"">
                   <AttributeType>Dexterity</AttributeType>
                   <Level>39</Level>
                 </Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
         </Children>
-      </HierarchicalTimingTypeViewModel>
-      <HierarchicalTimingTypeViewModel>
+      </TimingTypeVM>
+      <TimingTypeVM>
         <TimingType xmlns=""DarkSouls3"">Immediate</TimingType>
         <Children xmlns=""DarkSouls3"">
-          <HierarchicalSplitTypeViewModel>
+          <SplitTypeVM>
             <SplitType>Flag</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""xsd:unsignedInt"">13000885</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
-          <HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
+          <SplitTypeVM>
             <SplitType>Bonfire</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""Bonfire"">OceirosTheConsumedKing</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
-          <HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
+          <SplitTypeVM>
             <SplitType>ItemPickup</SplitType>
             <Children>
-              <HierarchicalSplitViewModel>
+              <SplitParamsVM>
                 <Split xsi:type=""ItemPickup"">CovenantWarriorOfSunlightRank1SunlightShield</Split>
-              </HierarchicalSplitViewModel>
+              </SplitParamsVM>
             </Children>
-          </HierarchicalSplitTypeViewModel>
+          </SplitTypeVM>
         </Children>
-      </HierarchicalTimingTypeViewModel>
+      </TimingTypeVM>
     </Splits>
   </DarkSouls3ViewModel>
   <SekiroViewModel>

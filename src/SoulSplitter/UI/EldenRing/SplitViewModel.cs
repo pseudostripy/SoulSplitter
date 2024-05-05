@@ -26,7 +26,7 @@ using SoulSplitter.UI.Generic;
 
 namespace SoulSplitter.UI.EldenRing
 {
-    public class HierarchicalTimingTypeViewModel : INotifyPropertyChanged
+    public class TimingTypeVM : INotifyPropertyChanged
     {
         public TimingType TimingType
         {
@@ -35,7 +35,7 @@ namespace SoulSplitter.UI.EldenRing
         }
         private TimingType _timingType;
 
-        public ObservableCollection<HierarchicalSplitTypeViewModel> Children { get; set; } = new ObservableCollection<HierarchicalSplitTypeViewModel>();
+        public ObservableCollection<SplitTypeVM> Children { get; set; } = new ObservableCollection<SplitTypeVM>();
 
         #region INotifyPropertyChanged
 
@@ -56,11 +56,11 @@ namespace SoulSplitter.UI.EldenRing
         #endregion
     }
 
-    public class HierarchicalSplitTypeViewModel : INotifyPropertyChanged
+    public class SplitTypeVM : INotifyPropertyChanged
     {
         [XmlIgnore]
         [NonSerialized]
-        public HierarchicalTimingTypeViewModel Parent;
+        public TimingTypeVM Parent;
 
         public EldenRingSplitType EldenRingSplitType
         {
@@ -69,7 +69,7 @@ namespace SoulSplitter.UI.EldenRing
         }
         private EldenRingSplitType _eldenRingSplitType;
 
-        public ObservableCollection<HierarchicalSplitViewModel> Children { get; set; } = new ObservableCollection<HierarchicalSplitViewModel>();
+        public ObservableCollection<SplitParamsVM> Children { get; set; } = new ObservableCollection<SplitParamsVM>();
 
         #region INotifyPropertyChanged
 
@@ -96,11 +96,11 @@ namespace SoulSplitter.UI.EldenRing
     [XmlInclude(typeof(uint))]
     [XmlInclude(typeof(Item))]
     [XmlInclude(typeof(Position))]
-    public class HierarchicalSplitViewModel : INotifyPropertyChanged
+    public class SplitParamsVM : INotifyPropertyChanged
     {
         [XmlIgnore]
         [NonSerialized]
-        public HierarchicalSplitTypeViewModel Parent;
+        public SplitTypeVM Parent;
 
         public object Split
         {

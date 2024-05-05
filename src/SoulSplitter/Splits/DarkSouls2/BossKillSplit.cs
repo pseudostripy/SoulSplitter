@@ -14,13 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-namespace SoulMemory.DarkSouls2
+using System;
+using SoulMemory;
+using SoulMemory.DarkSouls2;
+using SoulSplitter.UI.Generic;
+
+namespace SoulSplitter.Splits.DarkSouls2
 {
-    public interface IDarkSouls2 : IGame
+    internal class BossKillSplit : Split
     {
-        Vector3f GetPosition();
-        int GetBossKillCount(BossType bossType);
-        int GetAttribute(LvlAttr attribute);
-        bool IsLoading();
+        public BossKillSplit(TimingType timingType, BossType bossType, int count) : base(timingType,DS2SplitType.Position)
+        {
+            BossType = bossType;
+            Count = count;
+        }
+
+        public readonly BossType BossType;
+        public readonly int Count;
     }
 }

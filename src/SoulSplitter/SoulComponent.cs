@@ -43,6 +43,7 @@ namespace SoulSplitter
         private DateTime _lastFailedRefresh = DateTime.MinValue;
         private bool _previousBitBlt = false;
         public readonly MainWindow MainWindow;
+        // "Activate"
         public SoulComponent(LiveSplitState state = null)
         {
             MainWindow = new MainWindow();

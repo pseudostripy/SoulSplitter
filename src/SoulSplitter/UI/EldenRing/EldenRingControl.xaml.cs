@@ -48,7 +48,7 @@ namespace SoulSplitter.UI.EldenRing
         private void SplitsTreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             GetEldenRingViewModel().SelectedSplit = null;
-            if (e.NewValue is HierarchicalSplitViewModel b)
+            if (e.NewValue is SplitParamsVM b)
             {
                 GetEldenRingViewModel().SelectedSplit = b;
             }

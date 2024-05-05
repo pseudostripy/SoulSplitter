@@ -22,15 +22,15 @@ using System.Xml.Serialization;
 namespace SoulSplitter.Splits.DarkSouls2
 {
     [XmlType(Namespace = "DarkSouls2")]
-    public class Attribute : INotifyPropertyChanged
+    public class LvlAttrType : INotifyPropertyChanged
     {
         [XmlElement(Namespace = "DarkSouls2")]
-        public SoulMemory.DarkSouls2.Attribute AttributeType
+        public SoulMemory.DarkSouls2.LvlAttr AttributeType
         {
             get => _attributeType;
             set => SetField(ref _attributeType, value);
         }
-        private SoulMemory.DarkSouls2.Attribute _attributeType;
+        private SoulMemory.DarkSouls2.LvlAttr _attributeType;
 
         public int Level
         {

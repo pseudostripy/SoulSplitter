@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-namespace SoulMemory.DarkSouls2
+namespace SoulSplitter.Splits.DarkSouls2
 {
-    public interface IDarkSouls2 : IGame
+    public enum DS2SplitType
     {
-        Vector3f GetPosition();
-        int GetBossKillCount(BossType bossType);
-        int GetAttribute(LvlAttr attribute);
-        bool IsLoading();
+        Position,
+        BossKill,
+        LvlAttr,
+        Flag,
     }
 }

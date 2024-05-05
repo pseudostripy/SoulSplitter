@@ -53,7 +53,7 @@ namespace SoulSplitter.UI.DarkSouls2
 
         private void TextBoxRawFlag_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (_darkSouls2ViewModel.NewSplitType != null && _darkSouls2ViewModel.NewSplitType == DarkSouls2SplitType.Flag && sender is TextBox textBox)
+            if (_darkSouls2ViewModel.NewSplitType != null && _darkSouls2ViewModel.NewSplitType == DS2SplitType.Flag && sender is TextBox textBox)
             {
                 if (uint.TryParse(textBox.Text, out uint result))
                 {
@@ -67,7 +67,7 @@ namespace SoulSplitter.UI.DarkSouls2
         private void SplitsTreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             _darkSouls2ViewModel.SelectedSplit = null;
-            if (e.NewValue is HierarchicalSplitViewModel b)
+            if (e.NewValue is SplitParamsVM b)
             {
                 _darkSouls2ViewModel.SelectedSplit = b;
             }

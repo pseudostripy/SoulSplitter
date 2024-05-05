@@ -23,12 +23,30 @@ using System.Xml.Serialization;
 using SoulMemory;
 using SoulSplitter.Splits.DarkSouls2;
 using SoulSplitter.UI.Generic;
-using Attribute = SoulSplitter.Splits.DarkSouls2.Attribute;
+using LvlAttrType = SoulSplitter.Splits.DarkSouls2.LvlAttrType;
 
 namespace SoulSplitter.UI.DarkSouls2
 {
     [XmlType(Namespace = "DarkSouls2")]
-    public class HierarchicalTimingTypeViewModel : INotifyPropertyChanged
+    public class HierarchicalDS2VM : INotifyPropertyChanged
+    {
+        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName ?? "");
+            return true;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName ?? ""));
+        }
+    }
+
+    [XmlType(Namespace = "DarkSouls2")]
+    public class TimingTypeVM : INotifyPropertyChanged
     {
         public TimingType TimingType
         {
@@ -37,11 +55,9 @@ namespace SoulSplitter.UI.DarkSouls2
         }
         private TimingType _timingType;
         
-        public ObservableCollection<HierarchicalSplitTypeViewModel> Children { get; set; } = new ObservableCollection<HierarchicalSplitTypeViewModel>();
+        public ObservableCollection<SplitTypeVM> Children { get; set; } = new ObservableCollection<SplitTypeVM>();
 
-        #region INotifyPropertyChanged
-
-        private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, value)) return false;
             field = value;
@@ -50,61 +66,41 @@ namespace SoulSplitter.UI.DarkSouls2
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName ?? ""));
         }
-
-        #endregion
     }
 
     [XmlType(Namespace = "DarkSouls2")]
-    public class HierarchicalSplitTypeViewModel : INotifyPropertyChanged
+    public class SplitTypeVM : HierarchicalDS2VM
     {
         [XmlIgnore]
         [NonSerialized]
-        public HierarchicalTimingTypeViewModel Parent;
+        public TimingTypeVM Parent;
 
-        public DarkSouls2SplitType SplitType
+        public DS2SplitType SplitType
         {
             get => _splitType;
             set => SetField(ref _splitType, value);
         }
-        private DarkSouls2SplitType _splitType;
+        private DS2SplitType _splitType;
 
-
-        public ObservableCollection<HierarchicalSplitViewModel> Children { get; set; } = new ObservableCollection<HierarchicalSplitViewModel>();
-
-        #region INotifyPropertyChanged
-
-        private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-            field = value;
-            OnPropertyChanged(propertyName ?? "");
-            return true;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName ?? ""));
-        }
-
-        #endregion
+        public void AddChild(SplitParamsVM splitparams) => Children.Add(splitparams);
+        public ObservableCollection<SplitParamsVM> Children { get; set; } = new ObservableCollection<SplitParamsVM>();
     }
 
 
     [XmlType(Namespace = "DarkSouls2")]
     [XmlInclude(typeof(Vector3f)), 
      XmlInclude(typeof(BossKill)), 
-     XmlInclude(typeof(Attribute)), 
+     XmlInclude(typeof(LvlAttrType)), 
      XmlInclude(typeof(uint))]
-    public class HierarchicalSplitViewModel : INotifyPropertyChanged
+    public class SplitParamsVM : HierarchicalDS2VM
     {
         [XmlIgnore]
         [NonSerialized]
-        public HierarchicalSplitTypeViewModel Parent;
+        public SplitTypeVM Parent;
 
         [XmlElement(Namespace = "DarkSouls2")]
         public object Split
@@ -113,23 +109,5 @@ namespace SoulSplitter.UI.DarkSouls2
             set => SetField(ref _split, value);
         }
         private object _split;
-
-        #region INotifyPropertyChanged
-
-        private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-            field = value;
-            OnPropertyChanged(propertyName ?? "");
-            return true;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName ?? ""));
-        }
-
-        #endregion
     }
 }
