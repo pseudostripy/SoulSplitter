@@ -17,19 +17,29 @@
 using System;
 using SoulMemory;
 using SoulMemory.DarkSouls2;
+using SoulMemory.EldenRing;
 using SoulSplitter.UI.Generic;
 
 namespace SoulSplitter.Splits.DarkSouls2
 {
-    internal class BossKillSplit : Split
+    internal class FlagSplit : Split
     {
-        public BossKillSplit(TimingType timingType, BossType bossType, int count) : base(timingType,DS2SplitType.BossKill)
+        public FlagSplit(TimingType timingType, uint flag) : base(timingType,DS2SplitType.Flag)
         {
-            BossType = bossType;
-            Count = count;
+            Flag = flag;
         }
 
-        public readonly BossType BossType;
-        public readonly int Count;
+        public readonly uint Flag;
+
+        // Subclass overrides and concreteness
+        public override string ToString() => Flag.ToString();
+        public override bool Equals(object obj) => Equals(obj as FlagSplit);
+        public bool Equals(FlagSplit other)
+        {
+            return other != null &&
+                    TimingType == other.TimingType &&
+                    Flag == other.Flag;
+        }
+        public override int GetHashCode() => (TimingType, Flag).GetHashCode();
     }
 }

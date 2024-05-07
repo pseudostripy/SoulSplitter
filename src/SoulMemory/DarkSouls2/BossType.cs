@@ -67,7 +67,7 @@ namespace SoulMemory.DarkSouls2
         [Annotation(Name = "The Rotten")]
         TheRotten = 0x68,
 
-        [Annotation(Name = "Old DragonSlayer")]
+        [Annotation(Name = "Old Dragonslayer")]
         OldDragonSlayer = 0x50,
 
         [Annotation(Name = "Covetous Demon")]
@@ -133,7 +133,7 @@ namespace SoulMemory.DarkSouls2
         [Annotation(Name = "Blue Smelter Demon")]
         BlueSmelterDemon = 0xfc,
 
-        [Annotation(Name = "Fume knight")]
+        [Annotation(Name = "Fume Knight")]
         Fumeknight                      = 0xcc,
 
         [Annotation(Name = "Sir Alonne")]

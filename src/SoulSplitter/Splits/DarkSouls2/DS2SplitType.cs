@@ -14,13 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+using SoulMemory;
+
 namespace SoulSplitter.Splits.DarkSouls2
 {
     public enum DS2SplitType
     {
+        [Annotation(Name = "position")]
         Position,
+
+        [Annotation(Name = "boss kill")]
         BossKill,
+
+        [Annotation(Name = "level attribute")]
         LvlAttr,
+
+        [Annotation(Name = "event flag")]
         Flag,
     }
 }

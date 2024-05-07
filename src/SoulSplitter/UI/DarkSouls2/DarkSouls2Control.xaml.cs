@@ -51,23 +51,10 @@ namespace SoulSplitter.UI.DarkSouls2
             _darkSouls2ViewModel.RemoveSplit();
         }
 
-        private void TextBoxRawFlag_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_darkSouls2ViewModel.NewSplitType != null && _darkSouls2ViewModel.NewSplitType == DS2SplitType.Flag && sender is TextBox textBox)
-            {
-                if (uint.TryParse(textBox.Text, out uint result))
-                {
-                    _darkSouls2ViewModel.NewSplitValue = result;
-                    return;
-                }
-                _darkSouls2ViewModel.NewSplitValue = null;
-                textBox.Text = string.Empty;
-            }
-        }
         private void SplitsTreeView_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             _darkSouls2ViewModel.SelectedSplit = null;
-            if (e.NewValue is SplitParamsVM b)
+            if (e.NewValue is SplitVM b)
             {
                 _darkSouls2ViewModel.SelectedSplit = b;
             }
@@ -88,7 +75,7 @@ namespace SoulSplitter.UI.DarkSouls2
 
         private void CopyPosition_OnClick(object sender, RoutedEventArgs e)
         {
-            _darkSouls2ViewModel.NewSplitValue = _darkSouls2ViewModel.CurrentPosition.Clone();
+            _darkSouls2ViewModel.NewSplitPosition = _darkSouls2ViewModel.CurrentPosition.Clone();
         }
     }
 }

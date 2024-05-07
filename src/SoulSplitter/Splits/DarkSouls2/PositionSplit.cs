@@ -14,63 +14,32 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-using System;
+using System.Runtime;
 using SoulMemory;
 using SoulSplitter.UI.Generic;
 
 namespace SoulSplitter.Splits.DarkSouls2
 {
-    internal abstract class Split
+    internal class PositionSplit : Split
     {
-        public Split(TimingType timingType, DS2SplitType splitType)
+        public PositionSplit(TimingType timingType, Vector3f pos) : base(timingType, DS2SplitType.Position)
         {
-            TimingType = timingType;
-            SplitType = splitType;
+            Position = pos;
         }
-        //public Split(TimingType timingType, DS2SplitType splitType)
-        //{
-        //    TimingType = timingType;
-        //    SplitType = splitType;
 
-        //    //switch (SplitType)
-        //    //{
-        //    //    default:
-        //    //        throw new ArgumentException($"unsupported split type {SplitType}");
+        public Vector3f Position;
 
-        //    //    case DS2SplitType.Position:
-        //    //        Position = (Vector3f)split;
-        //    //        break;
-
-        //    //    case DS2SplitType.BossKill:
-        //    //        BossKill = (BossKill)split;
-        //    //        break;
-
-        //    //    case DS2SplitType.Attribute:
-        //    //        Attribute = (Attribute)split;
-        //    //        break;
-
-        //    //    case DS2SplitType.Flag:
-        //    //        Flag = (uint)split;
-        //    //        break;
-        //    //}
-        //}
-
-        public readonly TimingType TimingType;
-        public readonly DS2SplitType SplitType;
-        
-        //public readonly uint Flag;
-        //public readonly Vector3f Position;
-        //public readonly BossKill BossKill;
-        //public readonly Attribute Attribute;
-
-        /// <summary>
-        /// Set to true when split conditions are met. Does not trigger a split until timing conditions are met
-        /// </summary>
-        public bool SplitConditionMet = false;
-        
-        /// <summary>
-        /// True after this split object cause a split. No longer need to check split conditions
-        /// </summary>
-        public bool SplitTriggered = false;
+        // Subclass overrides and concreteness
+        public override string ToString() => Position.ToString();
+        public override bool Equals(object obj) => Equals(obj as PositionSplit);
+        public bool Equals(PositionSplit other)
+        {
+            return other != null &&
+                    TimingType == other.TimingType &&
+                    Position.X == other.Position.X && // compare values in case "copyobject" ref overwrite
+                    Position.Y == other.Position.Y &&
+                    Position.Z == other.Position.Z;
+        }
+        public override int GetHashCode() => (TimingType,Position).GetHashCode();
     }
 }

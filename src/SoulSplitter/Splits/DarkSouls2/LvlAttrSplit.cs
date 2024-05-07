@@ -18,6 +18,8 @@ using System;
 using SoulMemory;
 using SoulMemory.DarkSouls2;
 using SoulSplitter.UI.Generic;
+using SoulMemory.Memory;
+using SoulMemory.EldenRing;
 
 namespace SoulSplitter.Splits.DarkSouls2
 {
@@ -31,5 +33,17 @@ namespace SoulSplitter.Splits.DarkSouls2
 
         public readonly LvlAttr LvlAttrType;
         public readonly int Level;
+
+        // Subclass overrides and concreteness
+        public override string ToString() => $"{LvlAttrType.GetDisplayName()} [level {Level}]";
+        public override bool Equals(object obj) => Equals(obj as LvlAttrSplit);
+        public bool Equals(LvlAttrSplit other)
+        {
+            return other != null &&
+                    TimingType == other.TimingType &&
+                    LvlAttrType == other.LvlAttrType &&
+                    Level == other.Level;
+        }
+        public override int GetHashCode() => (TimingType, LvlAttrType, Level).GetHashCode();
     }
 }

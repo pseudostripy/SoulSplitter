@@ -17,13 +17,14 @@
 using System;
 using SoulMemory;
 using SoulMemory.DarkSouls2;
+using SoulMemory.Memory;
 using SoulSplitter.UI.Generic;
 
 namespace SoulSplitter.Splits.DarkSouls2
 {
     internal class BossKillSplit : Split
     {
-        public BossKillSplit(TimingType timingType, BossType bossType, int count) : base(timingType,DS2SplitType.Position)
+        public BossKillSplit(TimingType timingType, BossType bossType, int count) : base(timingType,DS2SplitType.BossKill)
         {
             BossType = bossType;
             Count = count;
@@ -31,5 +32,21 @@ namespace SoulSplitter.Splits.DarkSouls2
 
         public readonly BossType BossType;
         public readonly int Count;
+
+        // Subclass overrides and concreteness
+        private string KillCntDisplay => Count == 1 ? string.Empty : $" [kill {Count}]";
+        public override string ToString() => $"{BossType.GetDisplayName()}{KillCntDisplay}";
+        public override bool Equals(object obj) => Equals(obj as BossKillSplit);
+        public bool Equals(BossKillSplit other)
+        {
+            return other != null &&
+                    TimingType == other.TimingType &&
+                    BossType == other.BossType &&
+                    Count == other.Count;
+        }
+        public override int GetHashCode() => (TimingType, BossType, Count).GetHashCode();
+
+
+        
     }
 }

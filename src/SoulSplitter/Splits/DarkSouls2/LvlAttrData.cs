@@ -19,30 +19,28 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using SoulMemory.DarkSouls2;
-using SoulSplitter.UI.DarkSouls2;
-using SoulSplitter.UI.Generic;
+using SoulMemory.Memory;
 
 namespace SoulSplitter.Splits.DarkSouls2
 {
     [XmlType(Namespace = "DarkSouls2")]
-    public class BossKill
+    public class LvlAttrData
     {
-        public BossKill(BossType bossType, int count)
+        public LvlAttrData(LvlAttr lvlAttr, int level)
         {
-            BossType = bossType;
-            Count = count;
+            LvlAttr = lvlAttr;
+            Level = level;
         }
 
+        public LvlAttr LvlAttr { get; set; }
+        public int Level {  get; set; }
 
-        public BossType BossType { get; set; }
-        public int Count {  get; set; }
-        
         public bool CheckValidity()
         {
             // Add more here as appropriate
-            return Count > 0; // && BossType exists
+            return Level > 0; // && BossType exists
         }
 
-        public override string ToString() => $"{BossType} {Count}";
+        public override string ToString() => $"{LvlAttr.GetDisplayName()} {Level}";
     }
 }

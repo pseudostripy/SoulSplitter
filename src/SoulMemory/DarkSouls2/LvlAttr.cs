@@ -21,7 +21,9 @@ namespace SoulMemory.DarkSouls2
     [XmlType(Namespace = "SoulMemory.DarkSouls2")]
     public enum LvlAttr
     {
+        [Annotation(Name = "Soul Level")]
         SoulLevel,
+
         Vigor,
         Endurance,
         Vitality,
