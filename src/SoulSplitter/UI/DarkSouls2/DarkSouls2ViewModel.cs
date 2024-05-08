@@ -52,7 +52,27 @@ namespace SoulSplitter.UI.DarkSouls2
 
         internal List<Split> Splits = new List<Split>();
 
-        #region add/remove splits ============================================================================================================================================
+        #region Splits Hierarchy ============================================================================================================================================
+        //public ObservableCollection<TimingTypeVM> TimingTypeVMs { get; set; } = new ObservableCollection<TimingTypeVM>();
+        public HierarchicalDS2VM RootTreeVM { get; set; } = new RootVM();
+        public void RestoreHierarchy()
+        {
+            //When serializing the model, we can't serialize the parent relation, because that would be a circular reference. Instead, parent's are not serialized.
+            //After deserializing, the parent relations must be restored.
+
+            ////var test = Splits.SelectMany(s => s.Children))
+            //foreach (var chTimingType in TimingTypeVMs)
+            //{
+            //    foreach (var chSplitType in chTimingType.Children)
+            //    {
+            //        chSplitType.Parent = chTimingType;
+            //        foreach (var split in chSplitType.Children)
+            //        {
+            //            split.Parent = chSplitType;
+            //        }
+            //    }
+            //}
+        }
         private Split CreateSplit()
         {
             var timing = NewSplitTimingType.Value;
@@ -82,13 +102,11 @@ namespace SoulSplitter.UI.DarkSouls2
             var splitTypeVM = timVM.TryFindOrAddNew(split.SplitType);
             splitTypeVM.AddNewChild(split); // known to be unique
         }
-
         private bool IsUniqueSplit(Split split)
         {
             var dup = Splits.FirstOrDefault(s => s.Equals(split));
             return dup == null; // null because no matches -> unique
         }
-
         public void AddSplit()
         {
             // create and add
@@ -100,7 +118,6 @@ namespace SoulSplitter.UI.DarkSouls2
             // Add into our ViewModel tree:
             InsertSplit(split);
         }
-
         public void RemoveSplit()
         {
             if (SelectedSplit == null)
@@ -122,14 +139,9 @@ namespace SoulSplitter.UI.DarkSouls2
             //SelectedSplit = null;
 
         }
-
-
-        //public ObservableCollection<TimingTypeVM> TimingTypeVMs { get; set; } = new ObservableCollection<TimingTypeVM>();
-        public HierarchicalDS2VM RootTreeVM { get; set; } = new RootVM();
         #endregion
 
-        #region Properties for new splits ============================================================================================================================================
-
+        #region Properties for new splits ===================================================================================================================================
         [XmlIgnore]
         public TimingType? NewSplitTimingType
         {
@@ -280,7 +292,6 @@ namespace SoulSplitter.UI.DarkSouls2
             }
         }
         private SplitVM _selectedSplit = null;
-
         #endregion
 
         #region MainBindings
@@ -414,27 +425,6 @@ namespace SoulSplitter.UI.DarkSouls2
             }
         }
         private uint _nsFlag = 0; // default
-        #endregion
-
-        #region Splits hierarchy
-        public void RestoreHierarchy()
-        {
-            //When serializing the model, we can't serialize the parent relation, because that would be a circular reference. Instead, parent's are not serialized.
-            //After deserializing, the parent relations must be restored.
-
-            ////var test = Splits.SelectMany(s => s.Children))
-            //foreach (var chTimingType in TimingTypeVMs)
-            //{
-            //    foreach (var chSplitType in chTimingType.Children)
-            //    {
-            //        chSplitType.Parent = chTimingType;
-            //        foreach (var split in chSplitType.Children)
-            //        {
-            //            split.Parent = chSplitType;
-            //        }
-            //    }
-            //}
-        }
         #endregion
 
         #region Static UI source data ============================================================================================================================================
